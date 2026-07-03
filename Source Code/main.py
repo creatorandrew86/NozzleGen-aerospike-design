@@ -11,7 +11,6 @@ def on_solve():
     ui.show_results()
 
     if solver_errors:
-        print(solver_errors)
         ui.show_errors()
         return
     
