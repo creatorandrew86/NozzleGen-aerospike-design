@@ -1,27 +1,34 @@
 import tkinter as tk
 import sys, os
 
-import solver, interface
+import solver, interface, input
 
 def _resource_path(relative_path):
     try:
         base_path = sys._MEIPASS
     except AttributeError:
-        base_path = os.path.dirname(os.path.abspath(__file__))
+        base_path = os.path.abspath(".")
 
     return os.path.join(base_path, relative_path)
 
 
 def on_solve():
     inputs = ui.get_inputs_on_solve()
-    
-    results, solver_errors = solver.generate_aerospike_contour(inputs)
 
-    ui.results, ui.errors = results, solver_errors
-    if solver_errors:
+    input_errors = input.process_inputs_on_solve(inputs)
+    if input_errors:
+        ui.errors = input_errors
         ui.show_errors()
         return
     
+    results, solver_errors = solver.generate_aerospike_contour(inputs)
+    if solver_errors:
+        ui.errors = solver_errors
+        ui.show_errors()
+        return
+    
+    ui.results = results
+    ui.show_output()
     ui.show_results()
 
 
@@ -32,8 +39,8 @@ def on_save():
 if __name__ == "__main__":
     root = tk.Tk()
     root.title('Aerospike')
-    root.geometry('320x300')
-    root.resizable(False, True)
+    root.geometry('570x330')
+    root.resizable(False, False)
 
     icon_path = _resource_path(os.path.join("assets", "icon.ico"))
     root.iconbitmap(icon_path)
