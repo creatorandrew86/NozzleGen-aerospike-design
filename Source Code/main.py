@@ -1,7 +1,7 @@
 import tkinter as tk
 import sys, os
 
-import solver, interface, input
+import geometry, interface, input
 
 def _resource_path(relative_path):
     try:
@@ -21,7 +21,7 @@ def on_solve():
         ui.show_errors()
         return
     
-    results, solver_errors = solver.generate_aerospike_contour(inputs)
+    results, solver_errors = geometry.generate_aerospike_contour(inputs)
     if solver_errors:
         ui.errors = solver_errors
         ui.show_errors()
