@@ -1,4 +1,5 @@
 import tkinter as tk
+from pathlib import Path
 
 import geometry, interface, input
 
@@ -31,6 +32,9 @@ if __name__ == "__main__":
     root.title('Aerospike')
     root.geometry('570x330')
     root.resizable(False, False)
+
+    ICON = Path(__file__).resolve().parent.parent / "assets" / "icon.ico"
+    root.iconbitmap(ICON)
 
     ui = interface.Interface(root=root, on_solve=on_solve, on_save=on_save, results=None, errors=None)
 
